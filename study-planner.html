@@ -1,0 +1,788 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Study Planner | StudyForge</title>
+
+  <style>
+    :root {
+      --bg: #0b1120;
+      --panel: #121c30;
+      --panel-light: #18253b;
+      --border: #263650;
+      --text: #eef4ff;
+      --muted: #91a2bd;
+      --blue: #60a5fa;
+      --purple: #a78bfa;
+      --green: #34d399;
+      --red: #fb7185;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, "Segoe UI", Arial, sans-serif;
+      min-height: 100vh;
+    }
+
+    button, input, select {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    .app {
+      width: min(1180px, 100%);
+      margin: auto;
+      padding: 28px 22px 48px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      padding-bottom: 25px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .brand {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: .4px;
+    }
+
+    .brand span {
+      color: var(--blue);
+    }
+
+    .back-link {
+      color: var(--muted);
+      text-decoration: none;
+      border: 1px solid var(--border);
+      padding: 10px 14px;
+      border-radius: 10px;
+      font-size: 13px;
+    }
+
+    .back-link:hover {
+      color: white;
+      border-color: var(--blue);
+    }
+
+    .hero {
+      padding: 36px 0 25px;
+    }
+
+    .eyebrow {
+      color: var(--blue);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      font-size: clamp(28px, 5vw, 40px);
+      letter-spacing: -1px;
+      margin-bottom: 10px;
+    }
+
+    .hero p, .muted {
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .hero p {
+      max-width: 600px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .stat, .panel {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+    }
+
+    .stat {
+      padding: 20px;
+    }
+
+    .stat-label {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .stat-value {
+      font-size: 30px;
+      font-weight: 800;
+      margin: 12px 0 5px;
+    }
+
+    .stat-note {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .progress-track {
+      height: 6px;
+      background: #263650;
+      border-radius: 20px;
+      overflow: hidden;
+      margin-top: 12px;
+    }
+
+    .progress-fill {
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(90deg, var(--blue), var(--purple));
+      transition: width .25s;
+    }
+
+    .main-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 20px;
+      align-items: start;
+    }
+
+    .panel {
+      padding: 22px;
+      min-width: 0;
+    }
+
+    .panel-heading {
+      margin-bottom: 20px;
+    }
+
+    .panel-heading h2 {
+      font-size: 18px;
+      margin-bottom: 7px;
+    }
+
+    .panel-heading p {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .field {
+      margin-bottom: 16px;
+    }
+
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    input, select {
+      width: 100%;
+      background: #0b1425;
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px;
+      outline: none;
+    }
+
+    input:focus, select:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px #60a5fa20;
+    }
+
+    input::placeholder {
+      color: #64748b;
+    }
+
+    .two-columns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .primary-btn {
+      background: var(--blue);
+      color: #071426;
+      border: 0;
+      padding: 12px 16px;
+      border-radius: 10px;
+      font-weight: 800;
+      width: 100%;
+    }
+
+    .primary-btn:hover {
+      filter: brightness(1.08);
+    }
+
+    .message {
+      min-height: 20px;
+      margin-top: 12px;
+      font-size: 13px;
+      color: var(--green);
+    }
+
+    .schedule-list, .subject-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .empty {
+      border: 1px dashed var(--border);
+      border-radius: 12px;
+      padding: 24px 16px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .empty strong {
+      display: block;
+      color: var(--text);
+      margin-bottom: 5px;
+      font-size: 15px;
+    }
+
+    .subject-card, .session-card {
+      background: var(--panel-light);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 15px;
+    }
+
+    .subject-top, .session-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    .subject-name, .session-name {
+      font-weight: 750;
+      overflow-wrap: anywhere;
+    }
+
+    .subject-meta {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 7px;
+      line-height: 1.6;
+    }
+
+    .pill {
+      display: inline-block;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      font-weight: 800;
+      padding: 5px 8px;
+      border-radius: 20px;
+      white-space: nowrap;
+    }
+
+    .easy {
+      color: #6ee7b7;
+      background: #064e3b;
+    }
+
+    .medium {
+      color: #fcd34d;
+      background: #713f12;
+    }
+
+    .hard {
+      color: #fda4af;
+      background: #881337;
+    }
+
+    .subject-progress {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 14px;
+    }
+
+    .card-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 14px;
+    }
+
+    .small-btn {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text);
+      border-radius: 8px;
+      padding: 8px 10px;
+      font-size: 12px;
+    }
+
+    .small-btn:hover {
+      border-color: var(--blue);
+    }
+
+    .complete-btn {
+      color: var(--green);
+    }
+
+    .delete-btn {
+      color: var(--red);
+    }
+
+    .section-gap {
+      margin-top: 20px;
+    }
+
+    .footer {
+      text-align: center;
+      padding-top: 32px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    @media (max-width: 760px) {
+      .main-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .stats {
+        grid-template-columns: 1fr;
+      }
+
+      .stat {
+        padding: 16px;
+      }
+
+      .stat-value {
+        font-size: 25px;
+      }
+
+      .app {
+        padding: 20px 15px 35px;
+      }
+    }
+
+    @media (max-width: 400px) {
+      .two-columns {
+        grid-template-columns: 1fr;
+        gap: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="app">
+
+    <header class="topbar">
+      <div class="brand"><span>⚡</span> STUDYFORGE</div>
+      <a class="back-link" href="index.html">← Back to Dashboard</a>
+    </header>
+
+    <section class="hero">
+      <div class="eyebrow">YOUR PERSONAL STUDY ASSISTANT</div>
+      <h1>Smart Study Planner</h1>
+      <p>
+        Organize your subjects, keep exam dates in sight,
+        and track your study progress — one step at a time.
+      </p>
+    </section>
+
+    <section class="stats" aria-label="Study statistics">
+      <article class="stat">
+        <div class="stat-label">Total Subjects</div>
+        <div class="stat-value" id="total-subjects">0</div>
+        <div class="stat-note">Subjects you're preparing</div>
+      </article>
+
+      <article class="stat">
+        <div class="stat-label">Study Hours Remaining</div>
+        <div class="stat-value" id="remaining-hours">0</div>
+        <div class="stat-note">Estimated hours across subjects</div>
+      </article>
+
+      <article class="stat">
+        <div class="stat-label">Overall Progress</div>
+        <div class="stat-value" id="overall-progress">0%</div>
+        <div class="progress-track">
+          <div class="progress-fill" id="overall-progress-bar"></div>
+        </div>
+      </article>
+    </section>
+
+    <div class="main-grid">
+
+      <section class="panel">
+        <div class="panel-heading">
+          <h2>＋ Add a Subject</h2>
+          <p>Enter your syllabus details and upcoming exam date.</p>
+        </div>
+
+        <form id="subject-form">
+          <div class="field">
+            <label for="subject-name">Subject name</label>
+            <input
+              id="subject-name"
+              type="text"
+              maxlength="80"
+              placeholder="e.g. Mathematics"
+              required>
+          </div>
+
+          <div class="two-columns">
+            <div class="field">
+              <label for="chapter-count">Chapters remaining</label>
+              <input
+                id="chapter-count"
+                type="number"
+                min="1"
+                max="500"
+                step="1"
+                placeholder="e.g. 8"
+                required>
+            </div>
+
+            <div class="field">
+              <label for="study-hours">Estimated hours</label>
+              <input
+                id="study-hours"
+                type="number"
+                min="0.5"
+                max="1000"
+                step="0.5"
+                placeholder="e.g. 20"
+                required>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="difficulty">Difficulty level</label>
+            <select id="difficulty" required>
+              <option value="easy">Easy</option>
+              <option value="medium" selected>Medium</option>
+              <option value="hard">Hard</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="exam-date">Exam date</label>
+            <input id="exam-date" type="date" required>
+          </div>
+
+          <button class="primary-btn" type="submit">Add Subject to Planner</button>
+          <p class="message" id="form-message" role="status"></p>
+        </form>
+      </section>
+
+      <section class="panel">
+        <div class="panel-heading">
+          <h2>📅 Today's Study Schedule</h2>
+          <p>Suggested study sessions based on your upcoming exams.</p>
+        </div>
+
+        <div class="schedule-list" id="schedule-list">
+          <div class="empty">
+            <strong>No schedule yet</strong>
+            Add your first subject to start planning.
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+    <section class="panel section-gap">
+      <div class="panel-heading">
+        <h2>📚 My Subjects</h2>
+        <p>Track completed chapters and see how much work remains.</p>
+      </div>
+
+      <div class="subject-list" id="subject-list">
+        <div class="empty">
+          <strong>Your planner is ready</strong>
+          Add a subject using the form above.
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      StudyForge · Built for students, by students ⚡
+    </footer>
+
+  </main>
+
+  <script>
+    // Temporary first version: data stays in this browser tab.
+    // The next step will connect this page to the StudyForge backend.
+
+    const subjects = [];
+    let nextId = 1;
+
+    const $ = (id) => document.getElementById(id);
+
+    function daysUntil(dateString) {
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      const exam = new Date(dateString + "T00:00:00");
+      return Math.ceil((exam - today) / 86400000);
+    }
+
+    function showMessage(message, isError = false) {
+      $("form-message").textContent = message;
+      $("form-message").style.color = isError
+        ? "var(--red)"
+        : "var(--green)";
+    }
+
+    function makeElement(tag, className, text) {
+      const el = document.createElement(tag);
+      if (className) el.className = className;
+      if (text !== undefined) el.textContent = text;
+      return el;
+    }
+
+    function render() {
+      const totalHours = subjects.reduce(
+        (sum, subject) => sum + subject.hours,
+        0
+      );
+
+      const completedHours = subjects.reduce(
+        (sum, subject) => sum + subject.completedHours,
+        0
+      );
+
+      const progress = totalHours > 0
+        ? Math.round((completedHours / totalHours) * 100)
+        : 0;
+
+      $("total-subjects").textContent = subjects.length;
+      $("remaining-hours").textContent =
+        Math.max(0, totalHours - completedHours).toFixed(1)
+          .replace(/\.0$/, "");
+
+      $("overall-progress").textContent = progress + "%";
+      $("overall-progress-bar").style.width = progress + "%";
+
+      renderSubjects();
+      renderSchedule();
+    }
+
+    function renderSubjects() {
+      const container = $("subject-list");
+      container.replaceChildren();
+
+      if (subjects.length === 0) {
+        const empty = makeElement("div", "empty");
+        empty.append(
+          makeElement("strong", "", "Your planner is ready"),
+          makeElement("span", "", "Add a subject using the form above.")
+        );
+        container.append(empty);
+        return;
+      }
+
+      subjects.forEach((subject) => {
+        const percent = Math.min(
+          100,
+          Math.round(
+            (subject.completedHours / subject.hours) * 100
+          )
+        );
+
+        const card = makeElement("article", "subject-card");
+        const top = makeElement("div", "subject-top");
+        const details = makeElement("div");
+        details.append(
+          makeElement("div", "subject-name", subject.name),
+          makeElement(
+            "div",
+            "subject-meta",
+            subject.chapters + " chapters remaining · " +
+            Math.max(0, subject.hours - subject.completedHours)
+              .toFixed(1).replace(/\.0$/, "") +
+            " study hours remaining · Exam: " + subject.examDate
+          )
+        );
+
+        const pill = makeElement(
+          "span",
+          "pill " + subject.difficulty,
+          subject.difficulty
+        );
+
+        top.append(details, pill);
+
+        const progressLabel = makeElement("div", "subject-progress");
+        progressLabel.append(
+          makeElement("span", "", "Study progress"),
+          makeElement("span", "", percent + "%")
+        );
+
+        const track = makeElement("div", "progress-track");
+        const fill = makeElement("div", "progress-fill");
+        fill.style.width = percent + "%";
+        track.append(fill);
+
+        const actions = makeElement("div", "card-actions");
+
+        const complete = makeElement(
+          "button", "small-btn complete-btn", "✓ Complete 1 hour"
+        );
+        complete.type = "button";
+        complete.disabled = subject.completedHours >= subject.hours;
+        complete.addEventListener("click", () => {
+          subject.completedHours = Math.min(
+            subject.hours,
+            subject.completedHours + 1
+          );
+          render();
+        });
+
+        const remove = makeElement(
+          "button", "small-btn delete-btn", "Remove"
+        );
+        remove.type = "button";
+        remove.addEventListener("click", () => {
+          const index = subjects.findIndex((s) => s.id === subject.id);
+          if (index !== -1) subjects.splice(index, 1);
+          render();
+        });
+
+        actions.append(complete, remove);
+        card.append(top, progressLabel, track, actions);
+        container.append(card);
+      });
+    }
+
+    function renderSchedule() {
+      const container = $("schedule-list");
+      container.replaceChildren();
+
+      const upcoming = subjects
+        .filter((subject) => subject.completedHours < subject.hours)
+        .sort((a, b) => {
+          const dayDifference =
+            daysUntil(a.examDate) - daysUntil(b.examDate);
+
+          if (dayDifference !== 0) return dayDifference;
+
+          const difficultyRank = { hard: 3, medium: 2, easy: 1 };
+          return difficultyRank[b.difficulty] -
+            difficultyRank[a.difficulty];
+        });
+
+      if (upcoming.length === 0) {
+        const empty = makeElement("div", "empty");
+        empty.append(
+          makeElement("strong", "", subjects.length
+            ? "All planned study hours completed!"
+            : "No schedule yet"),
+          makeElement("span", "", subjects.length
+            ? "Add another subject whenever you're ready."
+            : "Add your first subject to start planning.")
+        );
+        container.append(empty);
+        return;
+      }
+
+      // A simple suggestion list, not yet a time-slot timetable.
+      upcoming.slice(0, 5).forEach((subject, index) => {
+        const card = makeElement("article", "session-card");
+        const top = makeElement("div", "session-top");
+        const info = makeElement("div");
+        info.append(
+          makeElement("div", "session-name", (index + 1) + ". " + subject.name),
+          makeElement(
+            "div",
+            "subject-meta",
+            daysUntil(subject.examDate) < 0
+              ? "Exam date has passed — update your exam date."
+              : daysUntil(subject.examDate) === 0
+                ? "Exam is today"
+                : daysUntil(subject.examDate) + " days until exam"
+          )
+        );
+
+        const duration = Math.min(
+          1,
+          Math.max(0, subject.hours - subject.completedHours)
+        );
+
+        top.append(
+          info,
+          makeElement("span", "pill " + subject.difficulty,
+            duration + " hr")
+        );
+
+        card.append(top);
+        container.append(card);
+      });
+    }
+
+    $("subject-form").addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      const name = $("subject-name").value.trim();
+      const chapters = Number($("chapter-count").value);
+      const hours = Number($("study-hours").value);
+      const difficulty = $("difficulty").value;
+      const examDate = $("exam-date").value;
+
+      if (!name || !Number.isInteger(chapters) || chapters < 1 ||
+          !Number.isFinite(hours) || hours < 0.5 || !examDate) {
+        showMessage("Please enter valid subject details.", true);
+        return;
+      }
+
+      if (!["easy", "medium", "hard"].includes(difficulty)) {
+        showMessage("Please select a valid difficulty.", true);
+        return;
+      }
+
+      if (daysUntil(examDate) < 0) {
+        showMessage("Choose today or a future exam date.", true);
+        return;
+      }
+
+      subjects.push({
+        id: nextId++,
+        name,
+        chapters,
+        hours,
+        difficulty,
+        examDate,
+        completedHours: 0
+      });
+
+      $("subject-form").reset();
+      $("difficulty").value = "medium";
+      showMessage("Subject added successfully!");
+      render();
+    });
+
+    render();
+  </script>
+</body>
+</html>

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0b1020">
+  <meta name="description" content="Upload PDF notes and prepare for smarter revision with StudyForge Smart Notes Lab.">
+  <title>Smart Notes Lab | StudyForge</title>
+  <link rel="stylesheet" href="notes-lab.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="../index.html">
+      <span class="brand-icon">⚡</span> StudyForge
+    </a>
+    <a class="back-link" href="../index.html">← Back to StudyForge</a>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <div class="eyebrow">
+        <span class="status-dot"></span> STUDYFORGE LEARNING TOOLS
+      </div>
+      <h1>Your notes.<br><span>Your next breakthrough.</span></h1>
+      <p>Turn PDF documents into searchable, readable text. Prepare your study material for smarter revision.</p>
+      <div class="hero-pills">
+        <span>📄 PDF extraction</span>
+        <span>🔎 Search text</span>
+        <span>📋 Copy notes</span>
+      </div>
+    </section>
+
+    <section class="workspace">
+      <div class="section-heading">
+        <div>
+          <p class="section-kicker">STEP 01</p>
+          <h2>Upload your notes</h2>
+          <p class="muted">Choose a PDF from your device to begin.</p>
+        </div>
+        <span class="file-badge">PDF · MAX 15 MB</span>
+      </div>
+
+      <label class="dropzone" id="dropzone" for="pdf-file">
+        <div class="upload-icon">↑</div>
+        <h3>Drop your PDF here</h3>
+        <p>or click to browse files on your device</p>
+        <span class="browse-button">Choose PDF</span>
+        <input type="file" id="pdf-file" accept=".pdf,application/pdf">
+      </label>
+
+      <div class="selected-file" id="selected-file" hidden>
+        <div class="pdf-icon">PDF</div>
+        <div class="file-info">
+          <strong id="file-name">No file selected</strong>
+          <span id="file-size"></span>
+        </div>
+        <button class="icon-button" id="remove-file" type="button" aria-label="Remove selected PDF">✕</button>
+      </div>
+
+      <button class="primary-button" id="extract-btn" type="button" disabled>
+        Extract text <span>→</span>
+      </button>
+
+      <div class="progress-track" id="progress-track" hidden>
+        <div class="progress-fill" id="progress-fill"></div>
+      </div>
+      <p class="status-message" id="status" role="status" aria-live="polite">
+        Your selected PDF will be processed in this browser.
+      </p>
+    </section>
+
+    <section class="notes-panel">
+      <div class="notes-header">
+        <div>
+          <p class="section-kicker">STEP 02</p>
+          <h2>Extracted notes</h2>
+          <p class="muted">Search, read and copy your extracted text.</p>
+        </div>
+        <div class="note-stats">
+          <span id="word-count">0 words</span>
+          <span id="page-count">0 pages</span>
+        </div>
+      </div>
+
+      <div class="notes-toolbar">
+        <div class="search-field">
+          <span>⌕</span>
+          <input id="search-input" type="search" placeholder="Find a word or topic..." disabled>
+        </div>
+        <button class="secondary-button" id="copy-btn" type="button" disabled>Copy text</button>
+        <button class="secondary-button" id="clear-btn" type="button" disabled>Clear</button>
+        <button class="secondary-button"id="download-btn"type="button"disabled>Download TXT</button>
+        <button class="secondary-button" id="font-decrease" type="button" disabled>A−</button>
+        <button class="secondary-button" id="font-increase" type="button" disabled>A+</button>
+        </div>
+
+
+      <p class="search-status" id="search-status" aria-live="polite"></p>
+     <div id="highlighted-text" class="highlighted-text" aria-live="polite">
+  Your extracted PDF text will appear here...
+</div>
+
+<textarea
+  id="extracted-text"
+  hidden
+  readonly
+  spellcheck="false"
+></textarea>
+      <p class="privacy-note">🔒 Your PDF is processed in your browser; it is not uploaded to your StudyForge server.</p>
+    </section>
+
+    <section class="learning-panel" id="revision-lab">
+  <div class="learning-heading">
+    <p class="section-kicker">STEP 03</p>
+    <h2>Revision Lab</h2>
+    <p class="muted">Turn your extracted notes into active revision practice.</p>
+  </div>
+
+  <div class="revision-tabs">
+    <button type="button" class="revision-tab active" id="flashcards-tab">
+      🗂️ Flashcards
+    </button>
+    <button type="button" class="revision-tab" id="quiz-tab">
+      🎯 Quiz Mode
+    </button>
+  </div>
+
+  <p class="revision-message" id="revision-message">
+    Extract a PDF first, then generate your revision material.
+  </p>
+
+  <div id="flashcards-panel">
+    <div class="revision-actions">
+      <button type="button" class="primary-button" id="generate-flashcards">
+        Generate Flashcards
+      </button>
+    </div>
+
+    <div class="flashcard-area" id="flashcard-area" hidden>
+      <p class="card-counter" id="card-counter"></p>
+
+      <button type="button" class="flashcard" id="flashcard">
+        <span class="flashcard-label" id="flashcard-label">QUESTION</span>
+        <span class="flashcard-content" id="flashcard-content"></span>
+        <span class="flashcard-hint" id="flashcard-hint">
+          Click to reveal answer
+        </span>
+      </button>
+
+      <div class="revision-actions">
+        <button type="button" class="secondary-button" id="previous-card">
+          ← Previous
+        </button>
+        <button type="button" class="secondary-button" id="flip-card">
+          Reveal Answer
+        </button>
+        <button type="button" class="secondary-button" id="next-card">
+          Next →
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div id="quiz-panel" hidden>
+    <div class="revision-actions">
+      <button type="button" class="primary-button" id="generate-quiz">
+        Generate Quiz
+      </button>
+    </div>
+
+    <div id="quiz-area" hidden>
+      <div class="quiz-topline">
+        <span id="quiz-progress">Question 1</span>
+        <span id="quiz-score">Score: 0</span>
+      </div>
+
+      <h3 id="quiz-question"></h3>
+      <div class="quiz-options" id="quiz-options"></div>
+      <p class="quiz-feedback" id="quiz-feedback" aria-live="polite"></p>
+
+      <button type="button" class="primary-button" id="next-question" disabled>
+        Next Question →
+      </button>
+    </div>
+  </div>
+</section>
+
+
+<section class="learning-panel" id="highlight-revision">
+  <div class="learning-heading">
+    <p class="section-kicker">STEP 04</p>
+    <h2>Highlight &amp; Revise</h2>
+    <p class="muted">
+      Save important lines and download your highlighted revision notes.
+    </p>
+  </div>
+
+  <p class="revision-message" id="bookmark-message">
+    Extract a PDF, select an important line in your notes, and save it here.
+  </p>
+
+  <div class="revision-actions">
+    <button
+      type="button"
+      class="primary-button"
+      id="save-highlight"
+      disabled
+    >
+      ★ Save Selected Line
+    </button>
+
+    <button
+      type="button"
+      class="secondary-button"
+      id="download-highlights"
+      disabled
+    >
+      Download Highlighted HTML
+    </button>
+  </div>
+
+  <div id="saved-highlights" class="saved-highlights">
+    <p class="muted">No saved highlights yet.</p>
+  </div>
+</section>
+
+
+    <footer class="page-footer">
+      <span>⚡ StudyForge Smart Notes Lab</span>
+      <span>Learn better, one page at a time.</span>
+    </footer>
+  </main>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script src="notes-lab.js"></script>
+</body>
+</html>

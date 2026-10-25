@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="description"
+        content="StudyForge - Free productivity and academic tools for students."
+    >
+
+    <title>StudyForge | Student Toolkit</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- ================= NAVBAR ================= -->
+
+    <header class="navbar">
+
+        <div class="nav-container">
+
+            <a href="#" class="logo" onclick="showHome()">
+                <span>⚡</span> STUDYFORGE
+            </a>
+
+            <nav class="nav-links">
+                <a href="#tools">Tools</a>
+                <a href="#about">About</a>
+                <a href="/smart-notes/notes-lab.html">Smart Notes Lab</a>
+                <a href="study-planner/study-planner.html">📅 Smart Study Planner</a>
+
+                <button
+                    class="theme-btn"
+                    id="themeBtn"
+                    aria-label="Toggle dark mode"
+                >
+                    🌙
+                </button>
+            </nav>
+
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                ☰
+            </button>
+
+        </div>
+
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="#tools">Tools</a>
+            <a href="#about">About</a>
+            <button onclick="toggleTheme()">🌙 Toggle Theme</button>
+        </div>
+
+    </header>
+
+
+    <!-- ================= HOME ================= -->
+
+    <main id="homePage">
+
+        <!-- HERO -->
+
+       
+<section class="hero">
+
+    <div class="hero-badge">
+        ✨ Free tools for smarter studying
+    </div>
+
+    <h1>
+        Study smarter.
+        <span>Achieve more.</span>
+    </h1>
+
+    <p>
+        Your all-in-one student workspace for planning,
+        productivity, and better study habits.
+    </p>
+
+    <div class="hero-actions">
+        <a href="#tools" class="hero-cta">Explore Study Tools →</a>
+        <span class="hero-note">Free to use · Built for students</span>
+    </div>
+
+    <div class="search-box">
+        <span>🔍</span>
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="Search tools..."
+            autocomplete="off"
+        >
+    </div>
+
+</section>
+
+
+
+        <!-- TOOLS -->
+
+        <section class="tools-section" id="tools">
+
+            <!-- ACADEMIC -->
+
+            <div class="tool-category">
+
+                <div class="category-heading">
+                    <h2>📊 Academic</h2>
+                    <span>1 tool</span>
+                </div>
+
+                <div class="tools-grid">
+
+                    <article
+                        class="tool-card"
+                        data-name="cgpa calculator academic"
+                        onclick="openTool('cgpa')"
+                    >
+
+                        <div class="tool-icon purple">
+                            📊
+                        </div>
+
+                        <h3>CGPA Calculator</h3>
+
+                        <p>
+                            Calculate your CGPA using
+                            grade points and credits.
+                        </p>
+
+                        <span class="open-link">
+                            Open tool →
+                        </span>
+
+                    </article>
+
+                </div>
+
+            </div>
+
+
+            <!-- PRODUCTIVITY -->
+
+            <div class="tool-category">
+
+                <div class="category-heading">
+                    <h2>⏱️ Productivity</h2>
+                    <span>2 tools</span>
+                </div>
+
+                <div class="tools-grid">
+
+                    <article
+                        class="tool-card"
+                        data-name="pomodoro timer productivity focus"
+                        onclick="openTool('pomodoro')"
+                    >
+
+                        <div class="tool-icon orange">
+                            ⏱️
+                        </div>
+
+                        <h3>Pomodoro Timer</h3>
+
+                        <p>
+                            Focus for 25 minutes,
+                            then take a short break.
+                        </p>
+
+                        <span class="open-link">
+                            Open tool →
+                        </span>
+
+                    </article>
+
+
+                    <article
+                        class="tool-card"
+                        data-name="exam countdown productivity date"
+                        onclick="openTool('countdown')"
+                    >
+
+                        <div class="tool-icon blue">
+                            📅
+                        </div>
+
+                        <h3>Exam Countdown</h3>
+
+                        <p>
+                            Track exactly how much time
+                            remains until your exam.
+                        </p>
+
+                        <span class="open-link">
+                            Open tool →
+                        </span>
+
+                    </article>
+
+                </div>
+
+            </div>
+
+
+            <!-- UTILITIES -->
+
+            <div class="tool-category">
+
+                <div class="category-heading">
+                    <h2>🛠️ Utilities</h2>
+                    <span>1 tool</span>
+                </div>
+
+                <div class="tools-grid">
+
+                    <article
+                        class="tool-card"
+                        data-name="word counter text characters sentences"
+                        onclick="openTool('words')"
+                    >
+
+                        <div class="tool-icon green">
+                            📝
+                        </div>
+
+                        <h3>Word Counter</h3>
+
+                        <p>
+                            Count words, characters
+                            and sentences instantly.
+                        </p>
+
+                        <span class="open-link">
+                            Open tool →
+                        </span>
+
+                    </article>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ABOUT -->
+
+        <section class="about" id="about">
+
+            <div class="about-content">
+
+                <span class="section-label">
+                    ABOUT STUDYFORGE
+                </span>
+
+                <h2>
+                    Built to make student life
+                    a little easier.
+                </h2>
+
+                <p>
+                    StudyForge brings useful academic and
+                    productivity tools together in one simple
+                    place.
+                </p>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- ================= TOOL PAGE ================= -->
+
+    <main id="toolPage" class="tool-page hidden">
+
+        <div class="tool-container">
+
+            <button class="back-btn" onclick="showHome()">
+                ← Back to tools
+            </button>
+
+
+            <!-- CGPA -->
+
+            <section id="cgpaTool" class="tool-panel hidden">
+
+                <div class="panel-header">
+
+                    <div class="large-tool-icon">
+                        📊
+                    </div>
+
+                    <div>
+                        <h2>CGPA Calculator</h2>
+                        <p>
+                            Enter your subject grade points
+                            and credits.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div id="subjectsContainer">
+
+                    <div class="subject-row">
+
+                        <input
+                            type="text"
+                            placeholder="Subject"
+                            class="subject-name"
+                        >
+
+                        <input
+                            type="number"
+                            placeholder="Grade Point"
+                            class="grade-point"
+                            min="0"
+                            max="10"
+                            step="0.1"
+                        >
+
+                        <input
+                            type="number"
+                            placeholder="Credits"
+                            class="credit"
+                            min="0"
+                            step="0.5"
+                        >
+
+                        <button
+                            class="remove-btn"
+                            onclick="removeSubject(this)"
+                            title="Remove subject"
+                        >
+                            ×
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <div class="button-row">
+
+                    <button
+                        class="secondary-btn"
+                        onclick="addSubject()"
+                    >
+                        + Add Subject
+                    </button>
+
+                    <button
+                        class="primary-btn"
+                        onclick="calculateCGPA()"
+                    >
+                        Calculate CGPA
+                    </button>
+
+                </div>
+
+
+                <div
+                    id="cgpaResult"
+                    class="result-box hidden"
+                >
+                    <p>Your CGPA</p>
+                    <strong id="cgpaValue">0.00</strong>
+                </div>
+
+            </section>
+
+
+            <!-- POMODORO -->
+
+            <section id="pomodoroTool" class="tool-panel hidden">
+
+                <div class="panel-header center">
+
+                    <div class="large-tool-icon">
+                        ⏱️
+                    </div>
+
+                    <h2>Pomodoro Timer</h2>
+
+                    <p>
+                        Focus for 25 minutes without distractions.
+                    </p>
+
+                </div>
+
+
+                <div class="timer-container">
+
+                    <div id="timerDisplay" class="timer">
+                        25:00
+                    </div>
+
+                    <div class="timer-status" id="timerStatus">
+                        Ready to focus
+                    </div>
+
+                    <div class="button-row center">
+
+                        <button
+                            class="primary-btn"
+                            id="timerStartBtn"
+                            onclick="toggleTimer()"
+                        >
+                            Start
+                        </button>
+
+                        <button
+                            class="secondary-btn"
+                            onclick="resetTimer()"
+                        >
+                            Reset
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- COUNTDOWN -->
+
+            <section id="countdownTool" class="tool-panel hidden">
+
+                <div class="panel-header center">
+
+                    <div class="large-tool-icon">
+                        📅
+                    </div>
+
+                    <h2>Exam Countdown</h2>
+
+                    <p>
+                        Set your exam date and track the remaining time.
+                    </p>
+
+                </div>
+
+
+                <div class="countdown-form">
+
+                    <label for="examName">
+                        Exam name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="examName"
+                        placeholder="e.g. Mathematics Final Exam"
+                    >
+
+
+                    <label for="examDate">
+                        Exam date & time
+                    </label>
+
+                    <input
+                        type="datetime-local"
+                        id="examDate"
+                    >
+
+                    <button
+                        class="primary-btn full"
+                        onclick="startCountdown()"
+                    >
+                        Start Countdown
+                    </button>
+
+                </div>
+
+
+                <div
+                    id="countdownResult"
+                    class="countdown-result hidden"
+                >
+
+                    <p id="countdownExamName">
+                        Your Exam
+                    </p>
+
+                    <div id="countdownDisplay">
+                        0d 0h 0m 0s
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- WORD COUNTER -->
+
+            <section id="wordsTool" class="tool-panel hidden">
+
+                <div class="panel-header">
+
+                    <div class="large-tool-icon">
+                        📝
+                    </div>
+
+                    <div>
+
+                        <h2>Word Counter</h2>
+
+                        <p>
+                            Analyze your text instantly.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <textarea
+                    id="textInput"
+                    class="text-area"
+                    placeholder="Start typing or paste your text..."
+                ></textarea>
+
+
+                <div class="stats-grid">
+
+                    <div class="stat-card">
+                        <span>Words</span>
+                        <strong id="wordCount">0</strong>
+                    </div>
+
+                    <div class="stat-card">
+                        <span>Characters</span>
+                        <strong id="characterCount">0</strong>
+                    </div>
+
+                    <div class="stat-card">
+                        <span>Sentences</span>
+                        <strong id="sentenceCount">0</strong>
+                    </div>
+
+                </div>
+
+            </section>
+
+        </div>
+
+    </main>
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer>
+
+        <div class="footer-content">
+
+            <div class="footer-logo">
+                ⚡ STUDYFORGE
+            </div>
+
+            <p>
+                Built for students, by students.
+            </p>
+
+            <p class="copyright">
+                © 2026 StudyForge. All rights reserved.
+            </p>
+
+        </div>
+
+    </footer>
+
+    <!-- StudyForge Professional Dashboard -->
+<section id="study-dashboard" class="study-dashboard">
+
+  <div class="dashboard-header">
+    <div>
+      <p class="dashboard-eyebrow">YOUR WORKSPACE</p>
+      <h2>Study Dashboard</h2>
+      <p>Track your goals. Measure your progress.</p>
+    </div>
+    <div class="dashboard-date" id="dashboard-date"></div>
+  </div>
+
+  <!-- Overview Cards -->
+  <div class="dashboard-stats">
+
+    <article class="stat-card">
+      <div class="stat-icon">📅</div>
+      <p>Today's Tasks</p>
+      <h3 id="dashboard-today">0</h3>
+      <span>Tasks due today</span>
+    </article>
+
+    <article class="stat-card">
+      <div class="stat-icon">⏳</div>
+      <p>Pending Tasks</p>
+      <h3 id="dashboard-pending">0</h3>
+      <span>Still to complete</span>
+    </article>
+
+    <article class="stat-card">
+      <div class="stat-icon">🎯</div>
+      <p>Completion Rate</p>
+      <h3 id="dashboard-completion">0%</h3>
+      <div class="dashboard-progress-track">
+        <div
+          id="dashboard-progress-fill"
+          class="dashboard-progress-fill"
+          style="width: 0%"
+        ></div>
+      </div>
+    </article>
+
+    <article class="stat-card">
+      <div class="stat-icon">📚</div>
+      <p>Total Tasks</p>
+      <h3 id="dashboard-total">0</h3>
+      <span>All your study tasks</span>
+    </article>
+
+  </div>
+
+  <!-- Progress Charts -->
+  <div class="dashboard-charts">
+
+    <article class="chart-card">
+      <h3>Task Completion</h3>
+      <p class="chart-description">Completed vs pending tasks</p>
+      <div id="completion-chart" class="completion-chart">
+        <p>Add tasks to see your progress.</p>
+      </div>
+    </article>
+
+    <article class="chart-card">
+      <h3>Subject-wise Progress</h3>
+      <p class="chart-description">Completion rate for each subject</p>
+      <div id="subject-chart" class="subject-chart">
+        <p>Add tasks to see subject statistics.</p>
+      </div>
+    </article>
+
+  </div>
+
+</section>
+
+
+   
+<!-- StudyForge Study Planner -->
+<section id="study-planner" class="study-planner">
+  <div class="planner-header">
+    <h2>📚 Study Planner</h2>
+    <p>Plan your study sessions. Track your progress.</p>
+  </div>
+
+  <form id="task-form" class="task-form">
+    <div class="form-group">
+      <label for="task-subject">Subject</label>
+      <input
+        type="text"
+        id="task-subject"
+        placeholder="e.g. Mathematics"
+        required
+      >
+    </div>
+
+    <div class="form-group">
+      <label for="task-title">Task</label>
+      <input
+        type="text"
+        id="task-title"
+        placeholder="e.g. Revise differential equations"
+        required
+      >
+    </div>
+
+    <div class="form-group">
+      <label for="task-deadline">Deadline</label>
+      <input type="date" id="task-deadline">
+    </div>
+
+    <div class="form-group">
+      <label for="task-priority">Priority</label>
+      <select id="task-priority">
+        <option value="low">Low</option>
+        <option value="medium" selected>Medium</option>
+        <option value="high">High</option>
+      </select>
+    </div>
+
+    <button type="submit" class="add-task-btn">+ Add Task</button>
+  </form>
+
+  <p id="planner-message" role="status"></p>
+
+  <div class="planner-stats">
+    <span>Total: <strong id="total-tasks">0</strong></span>
+    <span>Pending: <strong id="pending-tasks">0</strong></span>
+    <span>Completed: <strong id="completed-tasks">0</strong></span>
+  </div>
+
+  
+<div class="task-filters">
+  <input
+    type="text"
+    id="filter-subject"
+    placeholder="Search by subject..."
+  >
+
+  <input
+    type="date"
+    id="filter-deadline"
+    aria-label="Filter by deadline"
+  >
+
+  <select id="filter-status">
+    <option value="all">All tasks</option>
+    <option value="pending">Pending</option>
+    <option value="completed">Completed</option>
+  </select>
+
+  <button type="button" id="clear-filters">Clear filters</button>
+</div>
+
+<div id="task-list" class="task-list"></div>
+
+</section>
+
+<script src="script.js"></script>
+</body>
+</html>
